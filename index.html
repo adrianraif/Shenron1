@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shenron</title>
+
+<style>
+
+html, body{
+    margin:0;
+    padding:0;
+    background:#000;
+    overflow:hidden;
+    width:100%;
+    height:100%;
+    font-family:Arial, sans-serif;
+}
+
+video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    object-fit:cover;
+}
+
+#continue{
+    position:fixed;
+    bottom:45px;
+    left:50%;
+    transform:translateX(-50%);
+    display:none;
+
+    padding:15px 45px;
+
+    font-size:22px;
+
+    border:2px solid white;
+    background:rgba(0,0,0,.65);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+#continue:hover{
+    background:white;
+    color:black;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<video id="video"
+autoplay
+muted
+playsinline
+disablepictureinpicture>
+
+<source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
+
+</video>
+
+<button id="continue">
+Continue
+</button>
+
+<script>
+
+const video=document.getElementById("video");
+const button=document.getElementById("continue");
+
+video.controls=false;
+
+video.onended=()=>{
+
+button.style.display="block";
+
+}
+
+button.onclick=()=>{
+
+window.location.href="PASTE YOUR BELIEFS PAGE URL HERE";
+
+}
+
+</script>
+
+</body>
+</html>
