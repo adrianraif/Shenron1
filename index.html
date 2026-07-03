@@ -1,269 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Shenron</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-
-<style>
-
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: black;
-    font-family: 'Cinzel', serif;
-}
-
-/* =========================
-   INTRO SCREEN
-========================= */
-
-#intro {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: black;
-    color: #D4AF37;
-    z-index: 10;
-    text-align: center;
-}
-
-#intro h1 {
-    font-size: 42px;
-    margin-bottom: 30px;
-}
-
-/* ENTER FULLSCREEN */
-#enterFullscreen {
-    padding: 16px 34px;
-    font-size: 18px;
-    font-family: 'Cinzel', serif;
-    border: 2px solid #D4AF37;
-    background: transparent;
-    color: #D4AF37;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#enterFullscreen:hover {
-    background: #D4AF37;
-    color: black;
-}
-
-/* READY SECTION */
-#readySection {
-    display: none;
-    margin-top: 20px;
-}
-
-#ready {
-    padding: 14px 30px;
-    font-size: 18px;
-    border: 2px solid #C0C0C0;
-    background: transparent;
-    color: #C0C0C0;
-    cursor: pointer;
-}
-
-/* =========================
-   VIDEO
-========================= */
-
-video {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    display: none;
-}
-
-/* =========================
-   WISH BUTTON
-========================= */
-
-#continue {
-    position: fixed;
-    left: 50%;
-    bottom: 55px;
-    transform: translateX(-50%) translateY(15px);
-
-    display: none;
-    opacity: 0;
-
-    padding: 18px 42px;
-    font-family: 'Cinzel', serif;
-    font-size: 22px;
-    font-weight: 700;
-
-    color: #D4AF37;
-    border: 2px solid #D4AF37;
-    background: rgba(0,0,0,.55);
-    cursor: pointer;
-
-    transition: 0.6s;
-}
-
-#continue:hover {
-    color: #FFE082;
-    border-color: #FFE082;
-    background: rgba(30,20,0,.8);
-}
-
-/* =========================
-   CONTINUE BUTTON (END)
-========================= */
-
-#endButton {
-    position: fixed;
-    left: 50%;
-    bottom: 45px;
-    transform: translateX(-50%) translateY(15px);
-
-    display: none;
-    opacity: 0;
-
-    padding: 16px 40px;
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-
-    color: #C0C0C0;
-    border: 2px solid #C0C0C0;
-    background: rgba(0,0,0,.55);
-    cursor: pointer;
-
-    transition: 0.8s;
-}
-
-#endButton:hover {
-    background: #C0C0C0;
-    color: black;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<!-- INTRO -->
-<div id="intro">
-    <h1>Enter the Shenron Experience</h1>
-
-    <button id="enterFullscreen">Enter Fullscreen</button>
-
-    <div id="readySection">
-        <button id="ready">I am ready</button>
-    </div>
-</div>
-
-<!-- VIDEO -->
-<video id="video" playsinline muted>
-    <source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
-</video>
-
-<!-- WISH BUTTON -->
-<button id="continue">
-I Want to Know Adrian's Beliefs!
-</button>
-
-<!-- END BUTTON -->
-<button id="endButton">
-Continue →
-</button>
-
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
+const intro = document.getElementById("intro");
 
-    const intro = document.getElementById("intro");
-    const enter = document.getElementById("enterFullscreen");
-    const readySection = document.getElementById("readySection");
-    const ready = document.getElementById("ready");
-    const video = document.getElementById("video");
-    const button = document.getElementById("continue");
-    const endButton = document.getElementById("endButton");
+const enter = document.getElementById("enterFullscreen");
 
-    let pausedForWish = false;
+const readySection = document.getElementById("readySection");
 
-    video.controls = false;
+const ready = document.getElementById("ready");
 
-    /* ENTER FULLSCREEN */
-    enter.onclick = async () => {
+const video = document.getElementById("video");
+
+const button = document.getElementById("continue");
+
+let pausedForWish = false;
+
+video.controls = false;
+
+enter.onclick = async () => {
+
+    if (document.documentElement.requestFullscreen) {
 
         try {
-            if (document.documentElement.requestFullscreen) {
-                await document.documentElement.requestFullscreen();
-            }
+            await document.documentElement.requestFullscreen();
         } catch (e) {}
 
-        enter.style.display = "none";
-        readySection.style.display = "block";
-    };
+    }
 
-    /* READY → START VIDEO */
-    ready.onclick = () => {
+    enter.style.display = "none";
 
-        intro.style.display = "none";
-        video.style.display = "block";
-        video.play().catch(() => {});
-    };
+    readySection.style.display = "block";
 
-    /* PAUSE AT 15s */
-    video.ontimeupdate = () => {
+};
 
-        if (!pausedForWish && video.currentTime >= 15) {
+ready.onclick = () => {
 
-            pausedForWish = true;
-            video.pause();
+    intro.style.display = "none";
 
-            button.style.display = "block";
+    video.style.display = "block";
 
-            requestAnimationFrame(() => {
-                button.style.opacity = "1";
-                button.style.transform = "translateX(-50%) translateY(0)";
-            });
-        }
-    };
+    video.play();
 
-    /* RESUME AT 20s */
-    button.onclick = () => {
+};
 
-        button.style.display = "none";
+// Pause at 15 seconds
+video.ontimeupdate = () => {
 
-        video.currentTime = 20;
-        video.play().catch(() => {});
-    };
+    if (!pausedForWish && video.currentTime >= 15) {
 
-    /* END VIDEO */
-    video.onended = () => {
+        pausedForWish = true;
 
-        endButton.style.display = "block";
+        video.pause();
+
+        button.style.display = "block";
 
         requestAnimationFrame(() => {
-            endButton.style.opacity = "1";
-            endButton.style.transform = "translateX(-50%) translateY(0)";
+
+            button.style.opacity = "1";
+            button.style.transform = "translateX(-50%) translateY(0)";
+
         });
-    };
 
-    /* FINAL CONTINUE */
-    endButton.onclick = () => {
-        alert("Next page coming soon (we’ll build it next)");
-    };
+    }
 
-});
+};
+
+video.onended = () => {
+
+    // Nothing here for now
+
+};
+
+button.onclick = () => {
+
+    button.style.display = "none";
+
+    video.currentTime = 20;
+
+    video.play();
+
+};
 
 </script>
-
-</body>
-</html>
