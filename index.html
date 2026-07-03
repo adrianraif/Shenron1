@@ -1,240 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Shenron</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-
-<style>
-
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-}
-
-#intro{
-    position:fixed;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#000;
-    z-index:10;
-}
-
-#message{
-    text-align:center;
-}
-
-#fullscreenText{
-    font-family:'Cinzel',serif;
-    font-size:32px;
-    color:#C0C0C0;
-    line-height:1.5;
-    margin-bottom:40px;
-}
-
-.clickable{
-    display:inline-block;
-
-    font-family:'Cinzel',serif;
-    font-size:30px;
-    font-weight:700;
-
-    color:#D4AF37;
-
-    cursor:pointer;
-    user-select:none;
-
-    transition:
-        color .3s ease,
-        transform .3s ease,
-        text-shadow .3s ease,
-        opacity .5s ease;
-}
-
-.clickable:hover{
-    color:#F4D35E;
-    transform:translateY(-3px);
-    text-shadow:
-        0 0 10px rgba(212,175,55,.8),
-        0 0 22px rgba(212,175,55,.45);
-}
-
-#readySection{
-    display:none;
-}
-
-video{
-    position:fixed;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    object-fit:cover;
-    display:none;
-}
-
-#continue{
-    position:fixed;
-    left:50%;
-    bottom:45px;
-
-    transform:translateX(-50%) translateY(15px);
-
-    display:none;
-    opacity:0;
-
-    padding:16px 40px;
-
-    font-family:'Cinzel',serif;
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:1.5px;
-
-    color:#C0C0C0;
-
-    border:2px solid #C0C0C0;
-    background:rgba(0,0,0,.55);
-
-    cursor:pointer;
-
-    transition:
-        opacity 1.8s ease,
-        transform 1.8s ease,
-        background .3s ease,
-        color .3s ease,
-        box-shadow .3s ease;
-}
-
-#continue:hover{
-    background:#C0C0C0;
-    color:#000;
-    box-shadow:0 0 18px rgba(192,192,192,.75);
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div id="intro">
-
-<div id="message">
-
-<div id="fullscreenText">
-For the best experience,<br>
-view in fullscreen.
-</div>
-
-<div id="enterFullscreen" class="clickable">
-Enter Fullscreen →
-</div>
-
-<div id="readySection">
-
-<div id="fullscreenText" style="margin-bottom:25px;">
-Perfect.
-</div>
-
-<div id="ready" class="clickable">
-I'm Ready. →
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<video
-id="video"
-muted
-playsinline
-disablepictureinpicture>
-
-<source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
-
-</video>
-
-<button id="continue">
-I Wish to Know Your Beliefs
-</button>
-
 <script>
 
-const intro=document.getElementById("intro");
+const intro = document.getElementById("intro");
 
-const enter=document.getElementById("enterFullscreen");
+const enter = document.getElementById("enterFullscreen");
 
-const readySection=document.getElementById("readySection");
+const readySection = document.getElementById("readySection");
 
-const ready=document.getElementById("ready");
+const ready = document.getElementById("ready");
 
-const video=document.getElementById("video");
+const video = document.getElementById("video");
 
-const button=document.getElementById("continue");
+const button = document.getElementById("continue");
 
-video.controls=false;
+let pausedForWish = false;
 
-enter.onclick=async()=>{
+video.controls = false;
 
-    if(document.documentElement.requestFullscreen){
+enter.onclick = async () => {
 
-        try{
+    if (document.documentElement.requestFullscreen) {
+
+        try {
             await document.documentElement.requestFullscreen();
-        }catch(e){}
+        } catch (e) {}
 
     }
 
-    enter.style.display="none";
+    enter.style.display = "none";
 
-    readySection.style.display="block";
+    readySection.style.display = "block";
 
-}
+};
 
-ready.onclick=()=>{
+ready.onclick = () => {
 
-    intro.style.display="none";
+    intro.style.display = "none";
 
-    video.style.display="block";
+    video.style.display = "block";
 
     video.play();
 
-}
+};
 
-video.onended=()=>{
+// Pause at 15 seconds
+video.ontimeupdate = () => {
 
-    setTimeout(()=>{
+    if (!pausedForWish && video.currentTime >= 15) {
 
-        button.style.display="block";
+        pausedForWish = true;
 
-        requestAnimationFrame(()=>{
+        video.pause();
 
-            button.style.opacity="1";
-            button.style.transform="translateX(-50%) translateY(0)";
+        button.style.display = "block";
+
+        requestAnimationFrame(() => {
+
+            button.style.opacity = "1";
+            button.style.transform = "translateX(-50%) translateY(0)";
 
         });
 
-    },1200);
+    }
 
-}
+};
 
-button.onclick=()=>{
+video.onended = () => {
 
-window.location.href="https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
+    // Nothing here for now
 
-}
+};
+
+button.onclick = () => {
+
+    button.style.display = "none";
+
+    video.currentTime = 20;
+
+    video.play();
+
+};
 
 </script>
-
-</body>
-</html>
