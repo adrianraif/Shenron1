@@ -20,9 +20,7 @@ html,body{
     background:#000;
 }
 
-/* =========================
-   OLD INTRO (UNCHANGED)
-========================= */
+/* ================= INTRO ================= */
 
 #intro{
     position:fixed;
@@ -77,9 +75,7 @@ html,body{
     display:none;
 }
 
-/* =========================
-   VIDEO
-========================= */
+/* ================= VIDEO ================= */
 
 video{
     position:fixed;
@@ -90,9 +86,7 @@ video{
     display:none;
 }
 
-/* =========================
-   CENTERED + BIG CONTINUE
-========================= */
+/* ================= WISH BUTTON ================= */
 
 #continue{
     position:fixed;
@@ -109,10 +103,8 @@ video{
     font-family:'Cinzel',serif;
     font-size:28px;
     font-weight:700;
-    letter-spacing:1.5px;
 
     color:#D4AF37;
-
     border:2px solid #D4AF37;
     background:rgba(0,0,0,.6);
 
@@ -126,6 +118,8 @@ video{
         background .3s ease,
         color .3s ease,
         box-shadow .3s ease;
+
+    animation: glow 2.2s ease-in-out infinite;
 }
 
 #continue:hover{
@@ -140,18 +134,27 @@ video{
     transform:translate(-50%, -50%) scale(1.05);
 }
 
+@keyframes glow{
+    0%,100%{
+        box-shadow:0 0 10px rgba(212,175,55,.2);
+    }
+    50%{
+        box-shadow:0 0 25px rgba(212,175,55,.5);
+    }
+}
+
 </style>
 
 </head>
 
 <body>
 
-<!-- INTRO (YOUR ORIGINAL) -->
+<!-- INTRO -->
 <div id="intro">
 
 <div id="message">
 
-<div id="fullscreenText">
+<div id="fullscreenText" id="text">
 For the best experience,<br>
 view in fullscreen.
 </div>
@@ -161,10 +164,6 @@ Enter Fullscreen →
 </div>
 
 <div id="readySection">
-
-<div id="fullscreenText" style="margin-bottom:25px;">
-Perfect.
-</div>
 
 <div id="ready" class="clickable">
 I'm Ready. →
@@ -181,9 +180,9 @@ I'm Ready. →
     <source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
 </video>
 
-<!-- CONTINUE (NOW CENTERED + BIG) -->
+<!-- WISH BUTTON -->
 <button id="continue">
-I Wish to Know Your Beliefs
+I Want to Know Adrian's Beliefs!
 </button>
 
 <script>
@@ -199,7 +198,7 @@ let pausedForWish=false;
 
 video.controls=false;
 
-/* FULLSCREEN */
+/* FULLSCREEN + PERFECT SWAP */
 enter.onclick=async()=>{
 
     try{
@@ -209,6 +208,9 @@ enter.onclick=async()=>{
     }catch(e){}
 
     enter.style.display="none";
+
+    document.getElementById("fullscreenText").innerHTML = "Perfect.";
+
     readySection.style.display="block";
 };
 
@@ -252,11 +254,18 @@ button.onclick=()=>{
 
 };
 
-/* REDIRECT */
+/* CINEMATIC END */
 video.onended=()=>{
 
-window.location.href =
-"https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
+    document.body.style.transition="opacity 1.5s ease";
+    document.body.style.opacity="0";
+
+    setTimeout(()=>{
+
+        window.location.href =
+        "https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
+
+    },1500);
 
 };
 
