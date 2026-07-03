@@ -11,8 +11,7 @@
 
 <style>
 
-html,
-body{
+html,body{
     margin:0;
     padding:0;
     width:100%;
@@ -23,8 +22,7 @@ body{
 
 video{
     position:fixed;
-    top:0;
-    left:0;
+    inset:0;
     width:100vw;
     height:100vh;
     object-fit:cover;
@@ -32,30 +30,34 @@ video{
 
 #continue{
     position:fixed;
-    bottom:45px;
     left:50%;
-    transform:translateX(-50%);
+    bottom:45px;
+
+    transform:translateX(-50%) translateY(15px);
 
     display:none;
     opacity:0;
 
-    padding:15px 45px;
+    padding:16px 40px;
 
-    font-family:'Cinzel', serif;
+    font-family:'Cinzel',serif;
     font-weight:700;
-    font-size:24px;
-    letter-spacing:2px;
+    font-size:20px;
+    letter-spacing:1.5px;
 
     color:#C0C0C0;
 
-    background:rgba(0,0,0,.55);
     border:2px solid #C0C0C0;
+    background:rgba(0,0,0,.55);
 
     cursor:pointer;
 
+    max-width:700px;
+    white-space:nowrap;
+
     transition:
         opacity 1.8s ease,
-        transform .3s ease,
+        transform 1.8s ease,
         background .3s ease,
         color .3s ease,
         box-shadow .3s ease;
@@ -63,9 +65,8 @@ video{
 
 #continue:hover{
     background:#C0C0C0;
-    color:#000;
-    box-shadow:0 0 18px rgba(192,192,192,.75);
-    transform:translateX(-50%) scale(1.05);
+    color:black;
+    box-shadow:0 0 18px rgba(192,192,192,.7);
 }
 
 </style>
@@ -75,41 +76,49 @@ video{
 <body>
 
 <video
-    id="video"
-    autoplay
-    muted
-    playsinline
-    disablepictureinpicture
->
-    <source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
+id="video"
+autoplay
+muted
+playsinline
+disablepictureinpicture>
+
+<source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
+
 </video>
 
 <button id="continue">
-    Continue
+I Wish To Know Your Beliefs
 </button>
 
 <script>
 
-const video = document.getElementById("video");
-const button = document.getElementById("continue");
+const video=document.getElementById("video");
+const button=document.getElementById("continue");
 
-video.controls = false;
+video.controls=false;
 
-video.onended = () => {
+video.onended=()=>{
 
-    button.style.display = "block";
+    setTimeout(()=>{
 
-    setTimeout(() => {
-        button.style.opacity = "1";
-    }, 100);
+        button.style.display="block";
 
-};
+        requestAnimationFrame(()=>{
 
-button.onclick = () => {
+            button.style.opacity="1";
+            button.style.transform="translateX(-50%) translateY(0)";
 
-    window.location.href = "https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?v=2";
+        });
 
-};
+    },1200);
+
+}
+
+button.onclick=()=>{
+
+window.location.href="https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
+
+}
 
 </script>
 
