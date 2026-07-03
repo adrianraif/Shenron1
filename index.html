@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Shenron</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
 <style>
 
-html, body{
+html,
+body{
     margin:0;
     padding:0;
-    background:#000;
-    overflow:hidden;
     width:100%;
     height:100%;
-    font-family:Arial, sans-serif;
+    overflow:hidden;
+    background:#000;
 }
 
 video{
@@ -32,25 +35,37 @@ video{
     bottom:45px;
     left:50%;
     transform:translateX(-50%);
+
     display:none;
+    opacity:0;
 
     padding:15px 45px;
 
-    font-size:22px;
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:24px;
+    letter-spacing:2px;
 
-    border:2px solid white;
-    background:rgba(0,0,0,.65);
+    color:#C0C0C0;
 
-    color:white;
+    background:rgba(0,0,0,.55);
+    border:2px solid #C0C0C0;
 
     cursor:pointer;
 
-    transition:.3s;
+    transition:
+        opacity 1.8s ease,
+        transform .3s ease,
+        background .3s ease,
+        color .3s ease,
+        box-shadow .3s ease;
 }
 
 #continue:hover{
-    background:white;
-    color:black;
+    background:#C0C0C0;
+    color:#000;
+    box-shadow:0 0 18px rgba(192,192,192,.75);
+    transform:translateX(-50%) scale(1.05);
 }
 
 </style>
@@ -59,38 +74,42 @@ video{
 
 <body>
 
-<video id="video"
-autoplay
-muted
-playsinline
-disablepictureinpicture>
-
-<source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
-
+<video
+    id="video"
+    autoplay
+    muted
+    playsinline
+    disablepictureinpicture
+>
+    <source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
 </video>
 
 <button id="continue">
-Continue
+    Continue
 </button>
 
 <script>
 
-const video=document.getElementById("video");
-const button=document.getElementById("continue");
+const video = document.getElementById("video");
+const button = document.getElementById("continue");
 
-video.controls=false;
+video.controls = false;
 
-video.onended=()=>{
+video.onended = () => {
 
-button.style.display="block";
+    button.style.display = "block";
 
-}
+    setTimeout(() => {
+        button.style.opacity = "1";
+    }, 100);
 
-button.onclick=()=>{
+};
 
-window.location.href="https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3";
+button.onclick = () => {
 
-}
+    window.location.href = "https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?v=2";
+
+};
 
 </script>
 
