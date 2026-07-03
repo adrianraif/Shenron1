@@ -1,83 +1,19 @@
-<script>
-
-const intro = document.getElementById("intro");
-
-const enter = document.getElementById("enterFullscreen");
-
-const readySection = document.getElementById("readySection");
-
-const ready = document.getElementById("ready");
-
-const video = document.getElementById("video");
-
-const button = document.getElementById("continue");
-
-let pausedForWish = false;
-
-video.controls = false;
-
-enter.onclick = async () => {
-
-    if (document.documentElement.requestFullscreen) {
-
-        try {
-            await document.documentElement.requestFullscreen();
-        } catch (e) {}
-
-    }
-
-    enter.style.display = "none";
-
-    readySection.style.display = "block";
-
-};
-
-ready.onclick = () => {
-
-    intro.style.display = "none";
-
-    video.style.display = "block";
-
-    video.play();
-
-};
-
-// Pause at 15 seconds
-video.ontimeupdate = () => {
-
-    if (!pausedForWish && video.currentTime >= 15) {
-
-        pausedForWish = true;
-
-        video.pause();
-
-        button.style.display = "block";
-
-        requestAnimationFrame(() => {
-
-            button.style.opacity = "1";
-            button.style.transform = "translateX(-50%) translateY(0)";
-
-        });
-
-    }
-
-};
-
-video.onended = () => {
-
-    // Nothing here for now
-
-};
-
-button.onclick = () => {
-
-    button.style.display = "none";
-
-    video.currentTime = 20;
-
-    video.play();
-
-};
-
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shenron (Rebuild)</title>
+<style>
+body{margin:0;background:#000;color:#fff;font-family:Georgia,serif;display:flex;justify-content:center;align-items:center;height:100vh}
+h1{font-size:2rem}
+p{opacity:.8}
+</style>
+</head>
+<body>
+<div>
+<h1>Shenron Rebuild Placeholder</h1>
+<p>This file is a placeholder so we can safely rebuild your page together without risking a broken upload.</p>
+</div>
+</body>
+</html>
