@@ -36,12 +36,13 @@ html,body{
     text-align:center;
 }
 
-#fullscreenText{
+.fullscreenText{
     font-family:'Cinzel',serif;
     font-size:32px;
     color:#C0C0C0;
     line-height:1.5;
     margin-bottom:40px;
+    transition:opacity .4s ease;
 }
 
 .clickable{
@@ -112,14 +113,14 @@ video{
 
     text-align:center;
 
+    animation: glow 2.2s ease-in-out infinite;
+
     transition:
         opacity .8s ease,
         transform .8s ease,
         background .3s ease,
         color .3s ease,
         box-shadow .3s ease;
-
-    animation: glow 2.2s ease-in-out infinite;
 }
 
 #continue:hover{
@@ -135,12 +136,8 @@ video{
 }
 
 @keyframes glow{
-    0%,100%{
-        box-shadow:0 0 10px rgba(212,175,55,.2);
-    }
-    50%{
-        box-shadow:0 0 25px rgba(212,175,55,.5);
-    }
+    0%,100%{ box-shadow:0 0 10px rgba(212,175,55,.2); }
+    50%{ box-shadow:0 0 25px rgba(212,175,55,.5); }
 }
 
 </style>
@@ -154,7 +151,7 @@ video{
 
 <div id="message">
 
-<div id="fullscreenText" id="text">
+<div class="fullscreenText" id="introText">
 For the best experience,<br>
 view in fullscreen.
 </div>
@@ -193,12 +190,13 @@ const readySection=document.getElementById("readySection");
 const ready=document.getElementById("ready");
 const video=document.getElementById("video");
 const button=document.getElementById("continue");
+const introText=document.getElementById("introText");
 
 let pausedForWish=false;
 
 video.controls=false;
 
-/* FULLSCREEN + PERFECT SWAP */
+/* FULLSCREEN */
 enter.onclick=async()=>{
 
     try{
@@ -209,7 +207,12 @@ enter.onclick=async()=>{
 
     enter.style.display="none";
 
-    document.getElementById("fullscreenText").innerHTML = "Perfect.";
+    introText.style.opacity="0";
+
+    setTimeout(()=>{
+        introText.innerHTML="Perfect.";
+        introText.style.opacity="1";
+    },300);
 
     readySection.style.display="block";
 };
@@ -254,18 +257,11 @@ button.onclick=()=>{
 
 };
 
-/* CINEMATIC END */
+/* END → REDIRECT */
 video.onended=()=>{
 
-    document.body.style.transition="opacity 1.5s ease";
-    document.body.style.opacity="0";
-
-    setTimeout(()=>{
-
-        window.location.href =
-        "https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
-
-    },1500);
+window.location.href =
+"https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
 
 };
 
