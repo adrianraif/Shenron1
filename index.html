@@ -20,7 +20,9 @@ html,body{
     background:#000;
 }
 
-/* ================= INTRO ================= */
+/* =========================
+   OLD INTRO (UNCHANGED)
+========================= */
 
 #intro{
     position:fixed;
@@ -75,7 +77,9 @@ html,body{
     display:none;
 }
 
-/* ================= VIDEO ================= */
+/* =========================
+   VIDEO
+========================= */
 
 video{
     position:fixed;
@@ -86,7 +90,9 @@ video{
     display:none;
 }
 
-/* ================= WISH BUTTON ================= */
+/* =========================
+   CENTERED + BIG CONTINUE
+========================= */
 
 #continue{
     position:fixed;
@@ -140,33 +146,33 @@ video{
 
 <body>
 
-<!-- INTRO -->
+<!-- INTRO (YOUR ORIGINAL) -->
 <div id="intro">
 
-    <div id="message">
+<div id="message">
 
-        <div id="fullscreenText">
-            For the best experience,<br>
-            view in fullscreen.
-        </div>
+<div id="fullscreenText">
+For the best experience,<br>
+view in fullscreen.
+</div>
 
-        <div id="enterFullscreen" class="clickable">
-            Enter Fullscreen →
-        </div>
+<div id="enterFullscreen" class="clickable">
+Enter Fullscreen →
+</div>
 
-        <div id="readySection">
+<div id="readySection">
 
-            <div id="fullscreenText" style="margin-bottom:25px;">
-                Perfect.
-            </div>
+<div id="fullscreenText" style="margin-bottom:25px;">
+Perfect.
+</div>
 
-            <div id="ready" class="clickable">
-                I'm Ready. →
-            </div>
+<div id="ready" class="clickable">
+I'm Ready. →
+</div>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
 </div>
 
@@ -175,60 +181,60 @@ video{
     <source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
 </video>
 
-<!-- BIG CENTRAL BUTTON -->
+<!-- CONTINUE (NOW CENTERED + BIG) -->
 <button id="continue">
-I Want to Know Adrian's Beliefs!
+I Wish to Know Your Beliefs
 </button>
 
 <script>
 
-const intro = document.getElementById("intro");
-const enter = document.getElementById("enterFullscreen");
-const readySection = document.getElementById("readySection");
-const ready = document.getElementById("ready");
-const video = document.getElementById("video");
-const button = document.getElementById("continue");
+const intro=document.getElementById("intro");
+const enter=document.getElementById("enterFullscreen");
+const readySection=document.getElementById("readySection");
+const ready=document.getElementById("ready");
+const video=document.getElementById("video");
+const button=document.getElementById("continue");
 
-let pausedForWish = false;
+let pausedForWish=false;
 
-video.controls = false;
+video.controls=false;
 
 /* FULLSCREEN */
-enter.onclick = async () => {
+enter.onclick=async()=>{
 
-    try {
-        if (document.documentElement.requestFullscreen) {
+    try{
+        if(document.documentElement.requestFullscreen){
             await document.documentElement.requestFullscreen();
         }
-    } catch (e) {}
+    }catch(e){}
 
-    enter.style.display = "none";
-    readySection.style.display = "block";
+    enter.style.display="none";
+    readySection.style.display="block";
 };
 
 /* START VIDEO */
-ready.onclick = () => {
+ready.onclick=()=>{
 
-    intro.style.display = "none";
-    video.style.display = "block";
-    video.play().catch(() => {});
+    intro.style.display="none";
+    video.style.display="block";
+    video.play().catch(()=>{});
 
 };
 
 /* PAUSE AT 15s */
-video.ontimeupdate = () => {
+video.ontimeupdate=()=>{
 
-    if (!pausedForWish && video.currentTime >= 15) {
+    if(!pausedForWish && video.currentTime>=15){
 
-        pausedForWish = true;
+        pausedForWish=true;
         video.pause();
 
-        button.style.display = "block";
+        button.style.display="block";
 
-        requestAnimationFrame(() => {
+        requestAnimationFrame(()=>{
 
-            button.style.opacity = "1";
-            button.style.transform = "translate(-50%, -50%) scale(1)";
+            button.style.opacity="1";
+            button.style.transform="translate(-50%, -50%) scale(1)";
 
         });
 
@@ -237,24 +243,20 @@ video.ontimeupdate = () => {
 };
 
 /* RESUME AT 20s */
-button.onclick = () => {
+button.onclick=()=>{
 
-    button.style.display = "none";
+    button.style.display="none";
 
-    video.currentTime = 20;
-    video.play().catch(() => {});
+    video.currentTime=20;
+    video.play().catch(()=>{});
 
 };
 
-/* END REDIRECT */
-video.onended = () => {
+/* REDIRECT */
+video.onended=()=>{
 
-    setTimeout(() => {
-
-        window.location.href =
-        "https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
-
-    }, 1200);
+window.location.href =
+"https://sites.google.com/students.edu.sg/adrian-portfolio/beliefs?authuser=3&v=2";
 
 };
 
