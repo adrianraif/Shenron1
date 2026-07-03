@@ -28,7 +28,62 @@ video{
     object-fit:cover;
 }
 
+/* ========================= */
+/* WISH BUTTON */
+/* ========================= */
+
+#wish{
+    position:fixed;
+    left:50%;
+    bottom:55px;
+
+    transform:translateX(-50%) translateY(15px);
+
+    display:none;
+    opacity:0;
+
+    padding:18px 42px;
+
+    font-family:'Cinzel',serif;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:1px;
+
+    color:#D4AF37;
+
+    border:2px solid #D4AF37;
+    background:rgba(0,0,0,.55);
+
+    cursor:pointer;
+
+    white-space:nowrap;
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease,
+        color .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+#wish:hover{
+
+    color:#FFE082;
+    border-color:#FFE082;
+    background:rgba(30,20,0,.8);
+
+    box-shadow:
+        0 0 15px rgba(212,175,55,.8),
+        0 0 35px rgba(212,175,55,.35);
+
+}
+
+/* ========================= */
+/* CONTINUE BUTTON */
+/* ========================= */
+
 #continue{
+
     position:fixed;
     left:50%;
     bottom:45px;
@@ -52,21 +107,22 @@ video{
 
     cursor:pointer;
 
-    max-width:700px;
-    white-space:nowrap;
-
     transition:
-        opacity 1.8s ease,
-        transform 1.8s ease,
+        opacity 1.2s ease,
+        transform 1.2s ease,
         background .3s ease,
         color .3s ease,
         box-shadow .3s ease;
+
 }
 
 #continue:hover{
+
     background:#C0C0C0;
     color:black;
+
     box-shadow:0 0 18px rgba(192,192,192,.7);
+
 }
 
 </style>
@@ -86,33 +142,75 @@ disablepictureinpicture>
 
 </video>
 
+<button id="wish">
+I Want to Know Adrian's Beliefs!
+</button>
+
 <button id="continue">
-I Wish To Know Your Beliefs
+Continue →
 </button>
 
 <script>
 
 const video=document.getElementById("video");
+const wish=document.getElementById("wish");
 const button=document.getElementById("continue");
 
 video.controls=false;
 
-video.onended=()=>{
+let paused=false;
 
-    setTimeout(()=>{
+/* Pause at 15 seconds */
 
-        button.style.display="block";
+video.addEventListener("timeupdate",()=>{
+
+    if(!paused && video.currentTime>=15){
+
+        paused=true;
+
+        video.pause();
+
+        wish.style.display="block";
 
         requestAnimationFrame(()=>{
 
-            button.style.opacity="1";
-            button.style.transform="translateX(-50%) translateY(0)";
+            wish.style.opacity="1";
+            wish.style.transform="translateX(-50%) translateY(0)";
 
         });
 
-    },1200);
+    }
+
+});
+
+/* Resume at 20 seconds */
+
+wish.onclick=()=>{
+
+    wish.style.display="none";
+
+    video.currentTime=20;
+
+    video.play();
 
 }
+
+/* Show continue after video */
+
+video.onended=()=>{
+
+    button.style.display="block";
+
+    requestAnimationFrame(()=>{
+
+        button.style.opacity="1";
+        button.style.transform="translateX(-50%) translateY(0)";
+
+    });
+
+}
+
+/* Continue */
 
 button.onclick=()=>{
 
