@@ -45,45 +45,46 @@ html,body{
     transition:opacity .4s ease;
 }
 
-/* 🔥 ANIME GLOW TEXT */
+/* ================= 🔥 ANIME AURA GLOW ================= */
+
 .glowText{
-    animation: glowPulse 1.8s ease-in-out infinite;
+    color:#D4AF37;
+    animation: auraPulse 1.6s ease-in-out infinite;
+    text-shadow:
+        0 0 10px rgba(212,175,55,0.6),
+        0 0 25px rgba(212,175,55,0.4),
+        0 0 55px rgba(212,175,55,0.25);
 }
 
-@keyframes glowPulse{
+@keyframes auraPulse{
     0%,100%{
-        text-shadow:
-            0 0 8px rgba(192,192,192,0.4),
-            0 0 18px rgba(192,192,192,0.25);
         transform: scale(1);
+        filter: brightness(1);
+        text-shadow:
+            0 0 10px rgba(212,175,55,0.5),
+            0 0 20px rgba(212,175,55,0.3);
     }
     50%{
+        transform: scale(1.04);
+        filter: brightness(1.5);
         text-shadow:
-            0 0 14px rgba(212,175,55,0.9),
-            0 0 30px rgba(212,175,55,0.6),
-            0 0 60px rgba(212,175,55,0.3);
-        transform: scale(1.03);
-        color:#D4AF37;
+            0 0 15px rgba(255,215,90,0.9),
+            0 0 40px rgba(255,190,70,0.6),
+            0 0 80px rgba(255,160,50,0.3);
     }
 }
+
+/* ================= CLICKABLE ================= */
 
 .clickable{
     display:inline-block;
-
     font-family:'Cinzel',serif;
     font-size:30px;
     font-weight:700;
-
     color:#D4AF37;
-
     cursor:pointer;
     user-select:none;
-
-    transition:
-        color .3s ease,
-        transform .3s ease,
-        text-shadow .3s ease,
-        opacity .5s ease;
+    transition: all .3s ease;
 }
 
 .clickable:hover{
@@ -94,9 +95,7 @@ html,body{
         0 0 22px rgba(212,175,55,.45);
 }
 
-#readySection{
-    display:none;
-}
+#readySection{ display:none; }
 
 /* ================= VIDEO ================= */
 
@@ -115,26 +114,18 @@ video{
     position:fixed;
     left:50%;
     top:50%;
-
     transform:translate(-50%, -50%) scale(0.95);
-
     display:none;
     opacity:0;
-
     padding:24px 60px;
-
     font-family:'Cinzel',serif;
     font-size:28px;
     font-weight:700;
-
     color:#D4AF37;
     border:2px solid #D4AF37;
     background:rgba(0,0,0,.6);
-
     cursor:pointer;
-
     animation: glow 2.2s ease-in-out infinite;
-
     transition: all .4s ease;
 }
 
@@ -211,9 +202,7 @@ video.controls=false;
 enter.onclick=async()=>{
 
     try{
-        if(document.documentElement.requestFullscreen){
-            await document.documentElement.requestFullscreen();
-        }
+        await document.documentElement.requestFullscreen();
     }catch(e){}
 
     enter.style.display="none";
@@ -222,7 +211,12 @@ enter.onclick=async()=>{
 
     setTimeout(()=>{
         introText.innerHTML="Perfect.";
+
+        // 🔥 force animation restart (IMPORTANT FIX)
+        introText.classList.remove("glowText");
+        void introText.offsetWidth;
         introText.classList.add("glowText");
+
         introText.style.opacity="1";
     },300);
 
