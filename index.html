@@ -7,7 +7,7 @@
 
 <title>Shenron</title>
 
-<link rel="canonical" href="https://sites.google.com/view/adrian-oss-portfolio/beliefs">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -45,16 +45,6 @@ html,body{
     transition:opacity .4s ease;
 }
 
-/* ⭐ OLD STYLE GLOW (RESTORED) */
-.glowText{
-    color:#D4AF37;
-    text-shadow:
-        0 0 10px rgba(212,175,55,.6),
-        0 0 22px rgba(212,175,55,.35),
-        0 0 40px rgba(212,175,55,.2);
-    transition: all .4s ease;
-}
-
 .clickable{
     display:inline-block;
 
@@ -82,7 +72,9 @@ html,body{
         0 0 22px rgba(212,175,55,.45);
 }
 
-#readySection{ display:none; }
+#readySection{
+    display:none;
+}
 
 /* ================= VIDEO ================= */
 
@@ -95,15 +87,18 @@ video{
     display:none;
 }
 
-/* ================= BUTTON ================= */
+/* ================= WISH BUTTON ================= */
 
 #continue{
     position:fixed;
     left:50%;
     top:50%;
+
     transform:translate(-50%, -50%) scale(0.95);
+
     display:none;
     opacity:0;
+
     padding:24px 60px;
 
     font-family:'Cinzel',serif;
@@ -116,16 +111,27 @@ video{
 
     cursor:pointer;
 
+    text-align:center;
+
     animation: glow 2.2s ease-in-out infinite;
 
-    transition: all .4s ease;
+    transition:
+        opacity .8s ease,
+        transform .8s ease,
+        background .3s ease,
+        color .3s ease,
+        box-shadow .3s ease;
 }
 
 #continue:hover{
     color:#FFE082;
     border-color:#FFE082;
     background:rgba(30,20,0,.85);
-    box-shadow:0 0 30px rgba(212,175,55,.7);
+
+    box-shadow:
+        0 0 25px rgba(212,175,55,.8),
+        0 0 60px rgba(212,175,55,.35);
+
     transform:translate(-50%, -50%) scale(1.05);
 }
 
@@ -145,7 +151,7 @@ video{
 
 <div id="message">
 
-<div class="fullscreenText glowText" id="introText">
+<div class="fullscreenText" id="introText">
 For the best experience,<br>
 view in fullscreen.
 </div>
@@ -155,9 +161,11 @@ Enter Fullscreen →
 </div>
 
 <div id="readySection">
+
 <div id="ready" class="clickable">
 I'm Ready. →
 </div>
+
 </div>
 
 </div>
@@ -169,7 +177,7 @@ I'm Ready. →
     <source src="COME%20FORTH,%20SHENRON!.mp4" type="video/mp4">
 </video>
 
-<!-- BUTTON -->
+<!-- WISH BUTTON -->
 <button id="continue">
 I Want to Know Adrian's Beliefs!
 </button>
@@ -188,11 +196,13 @@ let pausedForWish=false;
 
 video.controls=false;
 
-/* FULLSCREEN */
+/* FULLSCREEN + PERFECT */
 enter.onclick=async()=>{
 
     try{
-        await document.documentElement.requestFullscreen();
+        if(document.documentElement.requestFullscreen){
+            await document.documentElement.requestFullscreen();
+        }
     }catch(e){}
 
     enter.style.display="none";
@@ -202,12 +212,6 @@ enter.onclick=async()=>{
     setTimeout(()=>{
         introText.innerHTML="Perfect.";
         introText.style.opacity="1";
-
-        // re-trigger glow cleanly
-        introText.classList.remove("glowText");
-        void introText.offsetWidth;
-        introText.classList.add("glowText");
-
     },300);
 
     readySection.style.display="block";
@@ -222,7 +226,7 @@ ready.onclick=()=>{
 
 };
 
-/* PAUSE */
+/* PAUSE AT 15s */
 video.ontimeupdate=()=>{
 
     if(!pausedForWish && video.currentTime>=15){
@@ -233,31 +237,76 @@ video.ontimeupdate=()=>{
         button.style.display="block";
 
         requestAnimationFrame(()=>{
+
             button.style.opacity="1";
             button.style.transform="translate(-50%, -50%) scale(1)";
+
         });
 
     }
 
 };
 
-/* RESUME */
+/* RESUME AT 20s */
 button.onclick=()=>{
 
     button.style.display="none";
+
     video.currentTime=20;
     video.play().catch(()=>{});
 
 };
 
-/* END */
+/* FINAL ANIME END TRANSITION */
 video.onended = () => {
 
-    setTimeout(() => {
-        window.location.href =
-        "https://sites.google.com/view/adrian-oss-portfolio/beliefs";
-    }, 1200);
+    const aura = document.createElement("div");
+    aura.style.position = "fixed";
+    aura.style.inset = "0";
+    aura.style.background = "radial-gradient(circle, rgba(0,255,120,0.25), transparent 60%)";
+    aura.style.zIndex = "999";
+    aura.style.pointerEvents = "none";
+    aura.style.opacity = "0";
+    aura.style.transition = "opacity 0.6s ease";
 
+    document.body.appendChild(aura);
+
+    document.body.style.transition =
+        "transform 0.2s ease, opacity 1.8s ease, filter 1.8s ease";
+
+    let shakeCount = 0;
+
+    const shake = setInterval(() => {
+
+        const x = (Math.random() - 0.5) * 10;
+        const y = (Math.random() - 0.5) * 10;
+
+        document.body.style.transform = `translate(${x}px, ${y}px)`;
+
+        shakeCount++;
+
+        if (shakeCount > 8) {
+
+            clearInterval(shake);
+
+            document.body.style.transform = "translate(0,0)";
+
+            aura.style.opacity = "1";
+
+            document.body.style.opacity = "0";
+            document.body.style.filter = "blur(8px) brightness(0)";
+
+            setTimeout(() => {
+                aura.style.opacity = "0";
+            }, 800);
+
+            setTimeout(() => {
+                window.location.href =
+                "https://sites.google.com/view/adrian-oss-portfolio/beliefs";
+            }, 1200);
+        }
+
+    }, 60);
 };
 
 </script>
